@@ -1,0 +1,61 @@
+group 'softjourn'
+version '1.0'
+
+apply plugin: 'war'
+apply plugin: 'jetty'
+apply plugin: 'java'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+configurations {
+    provided
+    compile.extendsFrom provided
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'io.spring.platform:platform-bom:1.1.3.RELEASE'
+    }
+}
+
+dependencies {
+    provided("org.projectlombok:lombok:1.12.6")
+    compile 'org.springframework:spring-webmvc',
+            'org.springframework.data:spring-data-jpa',
+            'org.hibernate:hibernate-core',
+            'org.hibernate:hibernate-entitymanager',
+            'org.hibernate.javax.persistence:hibernate-jpa-2.1-api',
+            'javax.persistence:persistence-api:1.0.2',
+            'javax.transaction:javax.transaction-api:1.2',
+            'com.fasterxml.jackson.core:jackson-core:2.2.3',
+            'com.fasterxml.jackson.core:jackson-databind:2.2.3',
+            'com.fasterxml.jackson.core:jackson-annotations:2.2.3',
+            'javax.servlet:javax.servlet-api:3.1.0',
+            'mysql:mysql-connector-java:5.1.38',
+            'org.slf4j:slf4j-api:1.7.12',
+            'com.jolbox:bonecp:0.8.0.RELEASE',
+            'ch.qos.logback:logback-classic:1.1.3'
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:0.5.5.RELEASE"
+
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.11'
+}
+
+
